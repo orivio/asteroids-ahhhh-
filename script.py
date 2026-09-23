@@ -14,10 +14,14 @@ class asteroid:
         self.radius = random.randint(10, 30)
         self.id = random.randint(0, 999)
 
+class spaceship:
+    def __init__(self):
+        self.pos = pygame.math.Vector2(300, 200)
 
 gameloop = True
 
 asteroids = [asteroid(), asteroid(), asteroid(), asteroid(), asteroid(), asteroid()]
+ship = spaceship()
 for ast in asteroids:
     for other in asteroids:
         if ast.vec.x + ast.radius == other.vec.y + other.radius and ast.vec.y + ast.radius == other.vec.y + other.radius:
@@ -44,6 +48,7 @@ while gameloop:
                     asteroid.vecmove = asteroid.vecmove - other.vecmove
                     other.vecmove = other.vecmove + asteroid.vecmove
                 asteroid.vecmove = asteroid.vecmove.normalize() * 2
+    pygame.draw.rect(screen, ((0, 0, 0)), pygame.Rect(ship.pos.x + -15, ship.pos.y - 15, 30, 30))
 
     
     clock.tick(30)
