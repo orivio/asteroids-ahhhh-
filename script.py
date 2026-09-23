@@ -24,7 +24,7 @@ asteroids = [asteroid(), asteroid(), asteroid(), asteroid(), asteroid(), asteroi
 ship = spaceship()
 for ast in asteroids:
     for other in asteroids:
-        if ast.vec.x + ast.radius == other.vec.y + other.radius and ast.vec.y + ast.radius == other.vec.y + other.radius:
+        if ast.vec == other.vec:
             ast = asteroid()
         if ast.id == other.id:
             ast = asteroid()
@@ -47,6 +47,8 @@ while gameloop:
                 if asteroid.vec.distance_to(other.vec) <= asteroid.radius + other.radius:
                     asteroid.vecmove = asteroid.vecmove - other.vecmove
                     other.vecmove = other.vecmove + asteroid.vecmove
+                if asteroid.vecmove == 0:
+                    asteroid.vecmove += pygame.math.Vector2(1, 1)
                 asteroid.vecmove = asteroid.vecmove.normalize() * 2
     pygame.draw.rect(screen, ((0, 0, 0)), pygame.Rect(ship.pos.x + -15, ship.pos.y - 15, 30, 30))
 
