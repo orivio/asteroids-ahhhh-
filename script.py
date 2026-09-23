@@ -12,6 +12,7 @@ class asteroid:
         self.vec = pygame.math.Vector2(random.randint(100, 500), random.randint(100, 300))
         self.vecmove = pygame.math.Vector2(random.randint(1, 3), random.randint(1, 3))
         self.radius = random.randint(10, 30)
+        self.id = random.randint(0, 999)
 
 
 gameloop = True
@@ -20,6 +21,8 @@ asteroids = [asteroid(), asteroid(), asteroid(), asteroid(), asteroid(), asteroi
 for ast in asteroids:
     for other in asteroids:
         if ast.vec == other.vec:
+            ast = asteroid()
+        if ast.id == other.id:
             ast = asteroid()
 
 
@@ -36,9 +39,11 @@ while gameloop:
         if asteroid.vec.y + asteroid.radius > 400 or 0 > asteroid.vec.y - asteroid.radius:
             asteroid.vecmove.y *= -1
         for other in asteroids:
-            if asteroid.vec.distance_to(other.vec) <= asteroid.radius + other.radius:
-                asteroid.vecmove = -asteroid.vecmove
-                other.vecmove = -other.vecmove
+            if other.id != asteroid.id:
+                if asteroid.vec.distance_to(other.vec) <= asteroid.radius + other.radius:
+                    asteroid.vecmove = asteroid.vecmove - other.vecmove
+                    other.vecmove = other.vecmove + asteroid.vecmove
+                asteroid.vecmove = asteroid.vecmove.normalize() * 2
 
     
     clock.tick(30)
