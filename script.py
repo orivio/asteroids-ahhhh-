@@ -20,7 +20,7 @@ gameloop = True
 asteroids = [asteroid(), asteroid(), asteroid(), asteroid(), asteroid(), asteroid()]
 for ast in asteroids:
     for other in asteroids:
-        if ast.vec == other.vec:
+        if ast.vec.x + ast.radius == other.vec.y + other.radius and ast.vec.y + ast.radius == other.vec.y + other.radius:
             ast = asteroid()
         if ast.id == other.id:
             ast = asteroid()
